@@ -1,0 +1,30 @@
+$key-bg: #333;
+$key-color: white;
+
+.list {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.row {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.key {
+  background: $key-bg;
+  color: $key-color;
+  padding: 2px;
+
+  &:hover {
+    background: white;
+    color: #333;
+    cursor: pointer;
+    outline: 1px solid black;
+  }
+}
+
+.active {
+  color: #333;
+  background: white;
+}
