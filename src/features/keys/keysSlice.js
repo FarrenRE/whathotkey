@@ -2,7 +2,19 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   activeKey: '',
-  modifiers: []
+  modifiers: [],
+  hotkeys: [
+    {
+      key: 'a',
+      modifiers: [],
+      description: 'The letter "A".'
+    },
+    {
+      key: 'c',
+      modifiers: ['Control'],
+      description: 'Copy'
+    }
+  ]
 }
 
 const keysSlice = createSlice({
@@ -11,11 +23,12 @@ const keysSlice = createSlice({
   reducers: {
     activeKeyUpdated(state, action) {
       console.log('activeKeyUpdated()')
-      const { nextKeyId } = action.payload
+      const { newActiveKey, newActiveKeyModifiers } = action.payload
 
       return {
         ...state,
-        activeKey: nextKeyId
+        activeKey: newActiveKey,
+        modifiers: newActiveKeyModifiers
       }
     }
   }
