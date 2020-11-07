@@ -1,7 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  activeKey: '',
+  activeKey: {
+    key: '',
+    which: '',
+    keyCode: '',
+    shiftKey: false,
+    altKey: false,
+    ctrlKey: false,
+    metaKey: false
+  },
   modifiers: [],
   hotkeys: [
     {
@@ -22,7 +30,6 @@ const keysSlice = createSlice({
   initialState,
   reducers: {
     activeKeyUpdated(state, action) {
-      console.log('activeKeyUpdated()')
       const { newActiveKey, newActiveKeyModifiers } = action.payload
 
       return {

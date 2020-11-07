@@ -9,13 +9,29 @@ export const KeyInput = () => {
 
   const dispatch = useDispatch()
 
-  const [activeKeyInput, setActiveKeyInput] = useState('')
+  const [activeKeyInput, setActiveKeyInput] = useState({})
   const [activeModifiers, setActiveModifiers] = useState([])
 
   const handleKeyDown = (e) => {
     e.preventDefault()
     console.log(`e.key: ${e.key}`)
-    const keyPressed = e.key
+    // const key = e.key
+    // const which = e.which
+    // const keyCode = e.keyCode
+    // const shiftKey = e.shiftKey
+    // const altKey = e.altKey
+    // const ctrlKey = e.ctrlKey
+
+    const keyPressed = {
+      key: e.key,
+      which: e.which,
+      keyCode: e.keyCode,
+      shiftKey: e.shiftKey,
+      altKey: e.altKey,
+      ctrlKey: e.ctrlKey,
+      metaKey: e.metaKey
+    }
+
     let keyModifiers = []
     if( e.ctrlKey ) { keyModifiers.push('Control') }
     if( e.altKey ) { keyModifiers.push('Alt') }
@@ -39,11 +55,11 @@ export const KeyInput = () => {
   }
 
   const displayActiveKey = () => {
-    let displayKeyValue = activeKeyInput
-    if( activeKeyInput.length === 1 ) {
-      displayKeyValue = activeKeyInput.toUpperCase()
+    let displayKeyValue = activeKeyInput.key || ''
+    if( displayKeyValue.length === 1 ) {
+      displayKeyValue = displayKeyValue.toUpperCase()
     }
-    if( activeKeyInput === ' ' ) {
+    if( displayKeyValue === ' ' ) {
       displayKeyValue = 'Spacebar'
     }
     return displayKeyValue
