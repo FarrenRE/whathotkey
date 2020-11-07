@@ -13,14 +13,29 @@ const initialState = {
   modifiers: [],
   hotkeys: [
     {
-      key: 'a',
+      key: '1',
       modifiers: [],
-      description: 'The letter "A".'
+      description: 'Select control group 1'
     },
     {
-      key: 'c',
+      key: '1',
       modifiers: ['Control'],
-      description: 'Copy'
+      description: 'Set control group 1'
+    },
+    {
+      key: '1',
+      modifiers: ['Shift'],
+      description: 'Add selection to control group 1'
+    },
+    {
+      key: 's',
+      modifiers: [],
+      description: 'Select larvae'
+    },
+    {
+      key: 'D',
+      modifiers: [],
+      description: 'Spawn drone'
     }
   ]
 }

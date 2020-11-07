@@ -14,16 +14,22 @@ export const KeyInput = () => {
 
   const handleKeyDown = (e) => {
     e.preventDefault()
-    console.log(`e.key: ${e.key}`)
-    // const key = e.key
-    // const which = e.which
-    // const keyCode = e.keyCode
-    // const shiftKey = e.shiftKey
-    // const altKey = e.altKey
-    // const ctrlKey = e.ctrlKey
 
-    const keyPressed = {
-      key: e.key,
+    // sanitise input and handle exceptions
+    const parsedKey = () => {
+      if( e.key === ' ' ) {
+        return 'Spacebar'
+      }
+      else if( 48 <= e.keyCode && e.keyCode <= 57 ) { // coerce shift + number key into number key instead of alt char
+        return String.fromCharCode( e.keyCode )
+      }
+      else if( e.key.length === 1 ) {
+        return e.key.toUpperCase()
+      }
+      else { return e.key }
+    }
+    const keypressData = {
+      key: parsedKey(),
       which: e.which,
       keyCode: e.keyCode,
       shiftKey: e.shiftKey,
@@ -31,24 +37,24 @@ export const KeyInput = () => {
       ctrlKey: e.ctrlKey,
       metaKey: e.metaKey
     }
+    console.log(keypressData)
 
+    // record modifiers (Ctrl/Alt/Shift)
     let keyModifiers = []
     if( e.ctrlKey ) { keyModifiers.push('Control') }
     if( e.altKey ) { keyModifiers.push('Alt') }
     if( e.shiftKey ) { keyModifiers.push('Shift') }
     // exception: if e.key is a modifier key, remove from array
     if( keyModifiers.find( key => key === e.key ) ) {
-      // console.log('Exception, your honour!')
       keyModifiers = keyModifiers.filter( m => m !== e.key )
     }
-    console.log(keyModifiers)
     // update state
-    setActiveKeyInput(keyPressed)
+    setActiveKeyInput(keypressData)
     setActiveModifiers(keyModifiers)
     // dispatch update
     dispatch(
       activeKeyUpdated({ 
-        newActiveKey: keyPressed,
+        newActiveKey: keypressData,
         newActiveKeyModifiers: keyModifiers  
       })
     )
@@ -69,14 +75,19 @@ export const KeyInput = () => {
     return activeModifiers.map(m=>m + ' + ').join('')
   }
 
+  const handleChange = () => {
+    console.log('Change is scary.')
+  }
+
   return (
-    <section>
-      <label>Type keys in the box below:</label>
+    <section className={styles.section}>
       <input
         className={styles.input}
         type="text"
         onKeyDown={handleKeyDown}
+        onChange={handleChange}
         value={displayActiveModifiers() + displayActiveKey()} />
+        <label>Try some hotkeys!</label>
     </section>
   )
 }
