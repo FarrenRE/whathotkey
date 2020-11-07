@@ -1,2 +1,1 @@
-Bulma ref: https://github.com/couds/react-bulma-components
 Nice keyboard styles: http://dmauro.github.io/Keypress/
