@@ -28,6 +28,7 @@ nav {
   display: flex;
   padding: 0;
   background: var(--redux-color);
+  text-align: center;
 }
 
 nav section {
@@ -59,7 +60,7 @@ nav a:hover {
 
 .navContent {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .navLinks {
