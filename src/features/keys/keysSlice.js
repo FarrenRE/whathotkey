@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  activeKey: ''
+  activeKey: '',
+  modifiers: []
 }
 
 const keysSlice = createSlice({

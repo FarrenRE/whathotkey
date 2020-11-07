@@ -14,6 +14,11 @@ export const KeyInput = () => {
   const handleKeyDown = (e) => {
     e.preventDefault()
     console.log(`e.key: ${e.key}`)
+    console.log(`e.which: ${e.which}`)
+    console.log(`e.shiftKey: ${e.shiftKey}`)
+    console.log(`e.ctrlKey: ${e.ctrlKey}`)
+    console.log(`e.altKey: ${e.altKey}`)
+    console.log(`e.metaKey: ${e.metaKey}`)
     const keyPressed = e.key
     setActiveKeyInput(keyPressed)
     dispatch(
