@@ -8,8 +8,8 @@ import {
 
 import { Navbar } from './app/Navbar'
 import { KeyDisplay } from './features/keys/KeyDisplay'
-import { KeysList } from './features/keys/KeysList'
 import { KeyInput } from './features/keys/KeyInput'
+import { AddKeybindForm } from './features/keys/AddKeybindForm'
 
 function App() {
   return (
@@ -23,8 +23,8 @@ function App() {
             render={() => (
               <React.Fragment>
                 <KeyDisplay />
-                {/* <KeysList /> */}
                 <KeyInput />
+                <AddKeybindForm />
               </React.Fragment>
             )}
           />
