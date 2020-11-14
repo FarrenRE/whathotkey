@@ -5,38 +5,36 @@ import styles from './KeyDisplay.module.scss'
 
 export const KeyDisplay = () => {
   const activeKey = useSelector(state => state.keys.activeKey)
-  const activeModifiers = useSelector(state => state.keys.modifiers)
-  const activeKeyConfig = useSelector(
-    state => state.keys.hotkeys.find( 
-      cfg => cfg.key.toUpperCase() === activeKey.key.toUpperCase() && JSON.stringify(cfg.modifiers) === JSON.stringify(activeModifiers) 
-    )
-  )
+  const profileHotkeys = useSelector(state => state.keys.profile.hotkeys)
 
-  const allHotkeys = useSelector(state => state.keys.hotkeys)
-  const availableModifiers = []
-  for(let hotkey of allHotkeys) {
-    if( hotkey.key === activeKey.key && JSON.stringify(hotkey.modifiers) !== JSON.stringify(activeKeyConfig.modifiers) ) {
-      availableModifiers.push( hotkey.modifiers.map( m => m ) )
+  const renderHotkeyDescription = () => {
+    let hotkeyDescription = ''
+    for( let hotkey of profileHotkeys ) {
+      console.log('renderHotkeyDescription, hotkey:')
+      console.log(hotkey)
+      console.log('activeKey:')
+      console.log(activeKey)
+      if( 
+        activeKey.key.toUpperCase() === hotkey.key.toUpperCase()
+        && activeKey.ctrlKey === hotkey.ctrlKey
+        && activeKey.altKey === hotkey.altKey
+        && activeKey.shiftKey === hotkey.shiftKey
+      ) {
+        console.log('true')
+        hotkeyDescription = hotkey.description
+        break
+      }
+      else {
+        hotkeyDescription = 'no data available.'
+      }
     }
-  }
-
-  const activeKeyString = () => {
-    if( activeKey.key.length === 1 ) {
-      return activeKey.key.toUpperCase()
-    }
-    else {
-      return activeKey.key
-    }
+    return hotkeyDescription
   }
 
   return (
     <section className={styles.section}>
-      <p className={styles.description}>{( activeKeyConfig ? activeKeyConfig.description : `The character: ${ activeKeyString() }` )}</p>
-      <p className={styles.modifiers}>
-        {( availableModifiers.length > 0 && true 
-        ? `Modifiers available: ${ availableModifiers.map( m => m ).join(', ') }`
-        : '' )}
-      </p>
+      <p className={styles.description}>{`Pressed: ${ activeKey.readableString }`}</p>
+      <p className={styles.description}>{renderHotkeyDescription()}</p>
     </section>
   )
 }

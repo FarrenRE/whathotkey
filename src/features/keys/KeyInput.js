@@ -10,7 +10,6 @@ export const KeyInput = () => {
   const dispatch = useDispatch()
 
   const [activeKeyInput, setActiveKeyInput] = useState({})
-  const [activeModifiers, setActiveModifiers] = useState([])
 
   const handleKeyDown = (e) => {
     e.preventDefault()
@@ -20,8 +19,9 @@ export const KeyInput = () => {
       if( e.key === ' ' ) {
         return 'Spacebar'
       }
-      else if( 48 <= e.keyCode && e.keyCode <= 57 ) { // coerce shift + number key into number key instead of alt char
-        return String.fromCharCode( e.keyCode )
+      // coerce shift + number key into number key instead of alt char
+      else if( 48 <= e.keyCode && e.keyCode <= 57 ) { 
+        return String.fromCharCode( e.keyCode ) 
       }
       else if( e.key.length === 1 ) {
         return e.key.toUpperCase()
@@ -35,44 +35,53 @@ export const KeyInput = () => {
       shiftKey: e.shiftKey,
       altKey: e.altKey,
       ctrlKey: e.ctrlKey,
-      metaKey: e.metaKey
+      metaKey: e.metaKey,
     }
+    keypressData.readableString = prepActiveKeyString(keypressData)
     console.log(keypressData)
 
-    // record modifiers (Ctrl/Alt/Shift)
-    let keyModifiers = []
-    if( e.ctrlKey ) { keyModifiers.push('Control') }
-    if( e.altKey ) { keyModifiers.push('Alt') }
-    if( e.shiftKey ) { keyModifiers.push('Shift') }
-    // exception: if e.key is a modifier key, remove from array
-    if( keyModifiers.find( key => key === e.key ) ) {
-      keyModifiers = keyModifiers.filter( m => m !== e.key )
-    }
     // update state
     setActiveKeyInput(keypressData)
-    setActiveModifiers(keyModifiers)
     // dispatch update
     dispatch(
-      activeKeyUpdated({ 
-        newActiveKey: keypressData,
-        newActiveKeyModifiers: keyModifiers  
-      })
+      activeKeyUpdated({ newActiveKey: keypressData })
     )
   }
 
-  const displayActiveKey = () => {
-    let displayKeyValue = activeKeyInput.key || ''
-    if( displayKeyValue.length === 1 ) {
-      displayKeyValue = displayKeyValue.toUpperCase()
-    }
-    if( displayKeyValue === ' ' ) {
-      displayKeyValue = 'Spacebar'
-    }
-    return displayKeyValue
-  }
+  /**
+   * Prepare a readable string for activeKey.readableString
+   */
+  const prepActiveKeyString = (keyData) => {
+    let delimeter = ' + '
+    let activeKeyString = ''
+    let activeKeyModifiers = []
 
-  const displayActiveModifiers = () => {
-    return activeModifiers.map(m=>m + ' + ').join('')
+    // create array of active modifier keys
+    if( keyData.ctrlKey ) {
+      activeKeyModifiers.push('Ctrl')
+    }
+    if( keyData.altKey ) {
+      activeKeyModifiers.push('Alt')
+    }
+    if( keyData.shiftKey ) {
+      activeKeyModifiers.push('Shift')
+    }
+    // assemble readable string from active modifier array
+    activeKeyString = activeKeyModifiers.map( (m)=> m ).join(delimeter)
+    // if there's a modifier, append delimeter if there's also a key pressed
+    const re = /(Shift|Alt|Control)/ // match modifier key as e.key value
+    if( activeKeyModifiers.length > 0 && !keyData.key.match(re) ) {
+      activeKeyString += delimeter
+    }
+    // uppercase any single letters, i.e. "a" -> "A"
+    if( keyData.key.length === 1 ) {
+      activeKeyString += keyData.key.toUpperCase()
+    }
+    // if e.key != modifier key, append to readable string
+    else if (!keyData.key.match(re)) { 
+      activeKeyString += keyData.key
+    }
+    return activeKeyString
   }
 
   const handleChange = () => {
@@ -86,7 +95,7 @@ export const KeyInput = () => {
         type="text"
         onKeyDown={handleKeyDown}
         onChange={handleChange}
-        value={displayActiveModifiers() + displayActiveKey()} />
+        value={activeKeyInput.readableString} />
         <label>Try some hotkeys!</label>
     </section>
   )

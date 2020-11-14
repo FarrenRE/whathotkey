@@ -8,36 +8,30 @@ const initialState = {
     shiftKey: false,
     altKey: false,
     ctrlKey: false,
-    metaKey: false
+    metaKey: false,
+    readableString: ''
   },
   modifiers: [],
-  hotkeys: [
-    {
-      key: '1',
-      modifiers: [],
-      description: 'Select control group 1'
-    },
-    {
-      key: '1',
-      modifiers: ['Control'],
-      description: 'Set control group 1'
-    },
-    {
-      key: '1',
-      modifiers: ['Shift'],
-      description: 'Add selection to control group 1'
-    },
-    {
-      key: 's',
-      modifiers: [],
-      description: 'Select larvae'
-    },
-    {
-      key: 'D',
-      modifiers: [],
-      description: 'Spawn drone'
-    }
-  ]
+  profile: {
+    name: 'test',
+    id: 'test',
+    hotkeys: [
+      {
+        key: 's',
+        shiftKey: false,
+        altKey: false,
+        ctrlKey: false,
+        description: 'Select drone'
+      },
+      {
+        key: '1',
+        shiftKey: true,
+        altKey: false,
+        ctrlKey: false,
+        description: 'Add to control group 1'
+      }
+    ]
+  }
 }
 
 const keysSlice = createSlice({
@@ -45,12 +39,28 @@ const keysSlice = createSlice({
   initialState,
   reducers: {
     activeKeyUpdated(state, action) {
-      const { newActiveKey, newActiveKeyModifiers } = action.payload
+      const { newActiveKey } = action.payload
+      // newActiveKey.readableString = prepActiveKeyString(newActiveKey)
 
       return {
         ...state,
-        activeKey: newActiveKey,
-        modifiers: newActiveKeyModifiers
+        activeKey: newActiveKey
+      }
+    },
+    keybindAdded: {
+      reducer(state, action) {
+        // state.hotkeys.push(action.payload)
+        const {key, title, content} = action.payload
+        // const existingKeybind = state.hotkeys.find( kb => kb.key === key && kb.modifiers ===  ) // TODO
+      },
+      prepare(key, title, content ) {
+        return {
+          payload: {
+            key,
+            title,
+            content
+          }
+        }
       }
     }
   }
