@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { nanoid } from '@reduxjs/toolkit'
 
 const initialState = {
   activeKey: {
@@ -14,7 +15,7 @@ const initialState = {
   modifiers: [],
   profile: {
     name: 'test',
-    id: 'test',
+    id: nanoid(),
     hotkeys: [
       {
         key: 's',
@@ -49,16 +50,31 @@ const keysSlice = createSlice({
     },
     keybindAdded: {
       reducer(state, action) {
-        // state.hotkeys.push(action.payload)
-        const {key, title, content} = action.payload
-        // const existingKeybind = state.hotkeys.find( kb => kb.key === key && kb.modifiers ===  ) // TODO
+        const {activeKey, description} = action.payload
+        const existingKeybind = state.profile.hotkeys.find(
+          kb => kb.key.toUpperCase() === activeKey.key.toUpperCase()
+          && kb.shiftKey === activeKey.shiftKey
+          && kb.altKey === activeKey.altKey
+          && kb.ctrlKey === activeKey.ctrlKey
+        )
+        if(existingKeybind) {
+          existingKeybind.description = description
+        }
+        else {
+          state.profile.hotkeys.push({
+            key: activeKey.key,
+            shiftKey: activeKey.shiftKey,
+            altKey: activeKey.altKey,
+            ctrlKey: activeKey.ctrlKey,
+            description
+          })
+        }
       },
-      prepare(key, title, content ) {
+      prepare(activeKey, description ) {
         return {
           payload: {
-            key,
-            title,
-            content
+            activeKey,
+            description
           }
         }
       }
@@ -66,6 +82,6 @@ const keysSlice = createSlice({
   }
 })
 
-export const { activeKeyUpdated } = keysSlice.actions
+export const { activeKeyUpdated, keybindAdded } = keysSlice.actions
 
 export default keysSlice.reducer
