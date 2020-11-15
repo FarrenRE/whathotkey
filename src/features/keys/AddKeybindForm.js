@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { nanoid } from '@reduxjs/toolkit'
+// import { nanoid } from '@reduxjs/toolkit'
 
-// import { postAdded } from './postsSlice' // TODO
+import { keybindAdded } from './keysSlice'
 
 export const AddKeybindForm = () => {
-  const [title, setTitle] = useState('')
+
+  const activeKey = useSelector(state => state.keys.activeKey)
+
   const [content, setContent] = useState('')
   // const [userId, setUserId] = useState('')
 
@@ -13,17 +15,16 @@ export const AddKeybindForm = () => {
 
   // const users = useSelector(state => state.users)
 
-  const onTitleChanged = e => setTitle(e.target.value)
   const onContentChanged = e => setContent(e.target.value)
   // const onAuthorChanged = e => setUserId(e.target.value)
 
   const onSavePostClicked = () => {
-    if (title && content)
+    if (content) {
       dispatch(
-        // postAdded(title, content, userId) // TODO
+        keybindAdded(activeKey, content)
       )
-      // setTitle('')
-      // setContent('')
+      setContent('')
+    }
   }
 
   // //  a bit of validation logic to our form so that the user can only click the 
@@ -40,16 +41,8 @@ export const AddKeybindForm = () => {
     <section>
       <h2>Add a Keybind</h2>
       <form>
-        <label htmlFor="postTitle">Name:</label>
-        <input
-          type="text"
-          id="postTitle"
-          name="postTitle"
-          value={title}
-          onChange={onTitleChanged}
-        />
-        <label htmlFor="postAuthor">App:</label>
-        {/* <select id="postAuthor" value={userId} onChange={onAuthorChanged}>
+        {/* <label htmlFor="postAuthor">App:</label>
+        <select id="postAuthor" value={userId} onChange={onAuthorChanged}>
           <option value=""></option>
           {usersOptions}
         </select> */}
@@ -60,7 +53,7 @@ export const AddKeybindForm = () => {
           value={content}
           onChange={onContentChanged}
         />
-        <button type="button" onClick={onSavePostClicked} /*disabled={!canSave}*/>Save Post</button>
+        <button type="button" onClick={onSavePostClicked} /*disabled={!canSave}*/>Save Keybind</button>
       </form>
     </section>
   )
