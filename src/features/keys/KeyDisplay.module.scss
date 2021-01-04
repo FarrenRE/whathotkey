@@ -1,5 +1,4 @@
 .section {
-  height: 25vh;
   margin-top: 1rem;
   padding: 1rem;
   text-align: center;
@@ -11,4 +10,17 @@
 
 .modifiers {
   opacity: 0.6;
+}
+
+.form {
+
+}
+
+.form label {
+  color: wheat;
+}
+
+.form textarea {
+  color: white;
+  text-align: center;
 }

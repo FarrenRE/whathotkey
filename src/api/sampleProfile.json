@@ -1,0 +1,15 @@
+[
+  {
+    "name": "sample",
+    "id": 1,
+    "hotkeys": [
+      {
+        "key": "s",
+        "shiftKey": false,
+        "altKey": false,
+        "ctrlKey": false,
+        "description": "Sample"
+      }
+    ]
+  } 
+]

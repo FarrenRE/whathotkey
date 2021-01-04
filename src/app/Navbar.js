@@ -5,7 +5,7 @@ export const Navbar = () => {
   return (
     <nav>
       <section>
-        <h1>What Hotkey?</h1>
+        <h1>whotkey?</h1>
 
         <div className="navContent">
           <div className="navLinks">

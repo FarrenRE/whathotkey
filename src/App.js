@@ -24,7 +24,7 @@ function App() {
               <React.Fragment>
                 <KeyDisplay />
                 <KeyInput />
-                <AddKeybindForm />
+                {/* <AddKeybindForm /> */}
               </React.Fragment>
             )}
           />

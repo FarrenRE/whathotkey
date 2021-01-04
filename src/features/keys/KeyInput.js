@@ -37,7 +37,7 @@ export const KeyInput = () => {
       ctrlKey: e.ctrlKey,
       metaKey: e.metaKey,
     }
-    keypressData.readableString = prepActiveKeyString(keypressData)
+    keypressData.readableString = getReadableString(keypressData)
     console.log(keypressData)
 
     // update state
@@ -51,7 +51,7 @@ export const KeyInput = () => {
   /**
    * Prepare a readable string for activeKey.readableString
    */
-  const prepActiveKeyString = (keyData) => {
+  const getReadableString = (keyData) => {
     let delimeter = ' + '
     let activeKeyString = ''
     let activeKeyModifiers = []
@@ -84,8 +84,9 @@ export const KeyInput = () => {
     return activeKeyString
   }
 
-  const handleChange = () => {
-    console.log('Change is scary.')
+  const handleChange = (e) => {
+    console.log('handleChange()')
+    console.log(e)
   }
 
   return (
@@ -93,10 +94,10 @@ export const KeyInput = () => {
       <input
         className={styles.input}
         type="text"
-        onKeyDown={handleKeyDown}
         onChange={handleChange}
+        onKeyDown={handleKeyDown}
         value={activeKeyInput.readableString} />
-        <label>Try some hotkeys!</label>
+        <label>^ Try some hotkeys! ^</label>
     </section>
   )
 }

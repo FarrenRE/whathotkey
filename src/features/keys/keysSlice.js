@@ -39,15 +39,19 @@ const keysSlice = createSlice({
   name: 'keys',
   initialState,
   reducers: {
+    /**
+     * Called on keypress, used to inform state of active key
+     */
     activeKeyUpdated(state, action) {
       const { newActiveKey } = action.payload
-      // newActiveKey.readableString = prepActiveKeyString(newActiveKey)
-
       return {
         ...state,
         activeKey: newActiveKey
       }
     },
+    /**
+     * Called on form submit, used to manage hotkey profile assignments
+     */
     keybindAdded: {
       reducer(state, action) {
         const {activeKey, description} = action.payload
@@ -78,6 +82,16 @@ const keysSlice = createSlice({
           }
         }
       }
+    }
+  },
+  /**
+   * WIP: Manage active profile
+   */
+  loadProfile(state, action) {
+    const { newActiveProfile } = action.payload
+    return {
+      ...state,
+      profile: newActiveProfile
     }
   }
 })
