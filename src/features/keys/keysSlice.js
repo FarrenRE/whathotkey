@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { nanoid } from '@reduxjs/toolkit'
 
+import sampleProfile from '../../api/sampleProfile.js'
+
 const initialState = {
   activeKey: {
     key: '',
@@ -13,26 +15,7 @@ const initialState = {
     readableString: ''
   },
   modifiers: [],
-  profile: {
-    name: 'test',
-    id: nanoid(),
-    hotkeys: [
-      {
-        key: 's',
-        shiftKey: false,
-        altKey: false,
-        ctrlKey: false,
-        description: 'Select drone'
-      },
-      {
-        key: '1',
-        shiftKey: true,
-        altKey: false,
-        ctrlKey: false,
-        description: 'Add to control group 1'
-      }
-    ]
-  }
+  profile: sampleProfile()
 }
 
 const keysSlice = createSlice({
