@@ -1,3 +1,5 @@
+$color-1: wheat;
+
 .section {
   margin-top: 1rem;
   padding: 1rem;
@@ -5,22 +7,29 @@
 }
 
 .description {
-  color: wheat;
+  color: $color-1;
 }
 
 .modifiers {
-  opacity: 0.6;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
 }
 
-.form {
-
+.modifier {
+  color: $color-1;
+  opacity: 0.3;
+  transition: .25s all;
+  &[data-active="true"] {
+    opacity: 1;
+  }
 }
 
-.form label {
-  color: wheat;
-}
-
-.form textarea {
-  color: white;
-  text-align: center;
+@media (min-width: 768px) {
+  .modifiers {
+    justify-content: flex-start
+  }
+  .modifier:not(:last-of-type) {
+    margin-right: 1rem;
+  }
 }

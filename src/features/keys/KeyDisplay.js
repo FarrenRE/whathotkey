@@ -33,7 +33,25 @@ export const KeyDisplay = () => {
   return (
     <section className={styles.section}>
       <div className={styles.keyDisplay}>
-        {renderHotkeyDescription()}
+        <div className={styles.description}>
+          {renderHotkeyDescription()}
+        </div>
+        <div className={styles.modifiers}>
+          <span 
+            className={styles.modifier} 
+            data-active={activeKey.ctrlKey}>
+            Ctrl
+          </span>
+          <span 
+            className={styles.modifier} 
+            data-active={activeKey.altKey}>
+            Alt
+          </span>          <span 
+            className={styles.modifier} 
+            data-active={activeKey.shiftKey}>
+            Shift
+          </span>
+        </div>
       </div>
     </section>
   )
