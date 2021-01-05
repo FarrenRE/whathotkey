@@ -9,7 +9,6 @@ import {
 import { Navbar } from './app/Navbar'
 import { KeyDisplay } from './features/keys/KeyDisplay'
 import { KeyInput } from './features/keys/KeyInput'
-import { AddKeybindForm } from './features/keys/AddKeybindForm'
 
 function App() {
   return (
@@ -24,11 +23,9 @@ function App() {
               <React.Fragment>
                 <KeyDisplay />
                 <KeyInput />
-                {/* <AddKeybindForm /> */}
               </React.Fragment>
             )}
           />
-          {/* <Route exact path="/posts/:postId" component={SinglePostPage} /> */}
           <Redirect to="/" />
         </Switch>
       </div>
