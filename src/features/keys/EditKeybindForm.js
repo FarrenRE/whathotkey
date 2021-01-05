@@ -26,18 +26,15 @@ export const EditKeybindForm = (props) => {
   }
 
   return (
-    <section>
-      <form className={styles.form}>
-        <label htmlFor="description">Description:</label>
-        <textarea
-          id="description"
-          name="description"
-          value={content}
-          onChange={onDescriptionChanged}
-        />
-        <button type="button" onClick={onSavePostClicked}>Save</button>
-      </form>
-    </section>
+    <form>
+      <textarea
+        id="description"
+        name="description"
+        value={content}
+        onChange={onDescriptionChanged}
+      />
+      <button type="button" onClick={onSavePostClicked}>Save</button>
+    </form>
   )
 }
 

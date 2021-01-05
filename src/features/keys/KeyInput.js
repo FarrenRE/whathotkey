@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { activeKeyUpdated } from './keysSlice'
-
 import styles from './KeyInput.module.scss'
 
 export const KeyInput = () => {
 
   const dispatch = useDispatch()
+  const inputLocked = useSelector(state => state.keys.inputLocked)
 
   const [activeKeyInput, setActiveKeyInput] = useState({})
+
 
   const handleKeyDown = (e) => {
     e.preventDefault()
@@ -96,7 +97,8 @@ export const KeyInput = () => {
         type="text"
         onChange={handleChange}
         onKeyDown={handleKeyDown}
-        value={activeKeyInput.readableString} />
+        value={activeKeyInput.readableString}
+        disabled={inputLocked} />
         <label>^ Try some hotkeys! ^</label>
     </section>
   )

@@ -1,17 +1,24 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+
+import { setInputLocked } from './keysSlice'
 import styles from './KeyDisplay.module.scss'
-import EditKeybindForm from './EditKeybindForm'
+// import EditKeybindForm from './EditKeybindForm'
+import { keybindAdded } from './keysSlice'
 
 /**
  * Component to display active key description
  */
 export const KeyDisplay = () => {
+
+  const dispatch = useDispatch()
   const activeKey = useSelector(state => state.keys.activeKey)
   const profileHotkeys = useSelector(state => state.keys.profile.hotkeys)
 
   // manage form editability state
   const [editMode, setEditMode] = useState(false)
+  // state to manage initial/edited description value
+  const [content, setContent] = useState( renderHotkeyDescription() )
 
   /**
    * Look up hotkey description based on active hotkey selector
@@ -35,34 +42,77 @@ export const KeyDisplay = () => {
     return hotkeyDescription
   }
 
+  const onEditClick = () => {
+    setEditMode(true)
+    setContent(renderHotkeyDescription()) // on edit, set default content to current description
+    dispatch(
+      setInputLocked({ inputLocked: true })
+    )
+  }
+
+  const onCancelClick = () => {
+    setEditMode(false)
+    dispatch(
+      setInputLocked({ inputLocked: false })
+    )
+  }
+
+  const onDescriptionChange = (e) => {
+    setContent( e.target.value )
+  }
+
+  const onSaveClick = () => {
+    if (content) {
+      dispatch(
+        keybindAdded(activeKey, content)
+      )
+    }
+    setEditMode(false)
+    dispatch(
+      setInputLocked({ inputLocked: false })
+    )
+  }
+
   return (
     <section className={styles.section}>
       <div className={styles.keyDisplay}>
 
-        <span className={styles.controls}>
+        <div className={styles.controls}>
           {!editMode ?
             <button 
               className={styles.control}
-              onClick={() => setEditMode(true)}>
+              onClick={onEditClick}>
                 Edit
             </button>
             :
-            <button 
-              className={styles.control}
-              onClick={() => setEditMode(false)}>
-                Cancel
-            </button>
+            <>
+              <button 
+                className={styles.control}
+                onClick={onSaveClick}>
+                  Save
+              </button>
+              <button 
+                className={styles.control}
+                onClick={onCancelClick}>
+                  Cancel
+              </button>
+            </>
           }
-        </span>
+        </div>
 
         {!editMode ?
           <div className={styles.description}>
             {renderHotkeyDescription()}
           </div>
           :
-          <EditKeybindForm
-            activeKey={activeKey}
-            description={renderHotkeyDescription()} /> // TODO: make active hotkey more accessible for child component     
+          <form>
+            <textarea
+              id="description"
+              name="description"
+              value={content}
+              onChange={onDescriptionChange}
+            />
+          </form>
         }
 
 

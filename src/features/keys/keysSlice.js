@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { nanoid } from '@reduxjs/toolkit'
+// import { nanoid } from '@reduxjs/toolkit'
 
 import sampleProfile from '../../api/sampleProfile.js'
 
@@ -14,8 +14,8 @@ const initialState = {
     metaKey: false,
     readableString: ''
   },
-  modifiers: [],
-  profile: sampleProfile()
+  profile: sampleProfile(),
+  inputLocked: false
 }
 
 const keysSlice = createSlice({
@@ -65,6 +65,13 @@ const keysSlice = createSlice({
           }
         }
       }
+    },
+    setInputLocked(state, action) {
+      const { inputLocked } = action.payload
+      return {
+        ...state,
+        inputLocked
+      }
     }
   },
   /**
@@ -79,6 +86,10 @@ const keysSlice = createSlice({
   }
 })
 
-export const { activeKeyUpdated, keybindAdded } = keysSlice.actions
+export const { 
+  activeKeyUpdated, 
+  keybindAdded, 
+  setInputLocked 
+} = keysSlice.actions
 
 export default keysSlice.reducer
