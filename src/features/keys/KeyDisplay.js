@@ -1,15 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-
-
 import styles from './KeyDisplay.module.scss'
+import EditKeybindForm from './EditKeybindForm'
 
+/**
+ * Component to display active key description
+ */
 export const KeyDisplay = () => {
   const activeKey = useSelector(state => state.keys.activeKey)
   const profileHotkeys = useSelector(state => state.keys.profile.hotkeys)
 
+  // manage form editability state
+  const [editMode, setEditMode] = useState(false)
+
   /**
    * Look up hotkey description based on active hotkey selector
+   * @returns String hotkey description
    */
   function renderHotkeyDescription() {
     let hotkeyDescription = ''
@@ -22,20 +28,44 @@ export const KeyDisplay = () => {
     if( activeHotkey ) {
       hotkeyDescription = activeHotkey.description
     }
-    else {
+    else { // if no description, set to this value:
       hotkeyDescription = 'Unbound'
     }
 
-    console.log('Active hotkey description:', hotkeyDescription)
     return hotkeyDescription
   }
 
   return (
     <section className={styles.section}>
       <div className={styles.keyDisplay}>
-        <div className={styles.description}>
-          {renderHotkeyDescription()}
-        </div>
+
+        <span className={styles.controls}>
+          {!editMode ?
+            <button 
+              className={styles.control}
+              onClick={() => setEditMode(true)}>
+                Edit
+            </button>
+            :
+            <button 
+              className={styles.control}
+              onClick={() => setEditMode(false)}>
+                Cancel
+            </button>
+          }
+        </span>
+
+        {!editMode ?
+          <div className={styles.description}>
+            {renderHotkeyDescription()}
+          </div>
+          :
+          <EditKeybindForm
+            activeKey={activeKey}
+            description={renderHotkeyDescription()} /> // TODO: make active hotkey more accessible for child component     
+        }
+
+
         <div className={styles.modifiers}>
           <span 
             className={styles.modifier} 
@@ -46,12 +76,14 @@ export const KeyDisplay = () => {
             className={styles.modifier} 
             data-active={activeKey.altKey}>
             Alt
-          </span>          <span 
+          </span>          
+          <span 
             className={styles.modifier} 
             data-active={activeKey.shiftKey}>
             Shift
           </span>
         </div>
+
       </div>
     </section>
   )
