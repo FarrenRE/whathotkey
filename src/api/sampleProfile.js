@@ -9,6 +9,13 @@ export const sampleProfile = () => {
         'altKey': false,
         'ctrlKey': false,
         'description': 'Select drone'
+      },
+      {
+        'key': 'l',
+        'shiftKey': false,
+        'altKey': false,
+        'ctrlKey': false,
+        'description': 'This is a really long hotkey description to test this case in which there is a really really really long hotkey description so we can know what the display looks like when there is a hotkey description of ludicrous proportions. Maybe have some punctuation happening as well; so we know what truly vast quantities of text will appear as within the key display. Perhaps an additional sentence would serve to bring home the fact that there is a lot, and I mean A LOT of text in this description.'
       }
     ]
   }
