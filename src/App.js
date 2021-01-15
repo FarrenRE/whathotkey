@@ -13,22 +13,22 @@ import { KeyInput } from './features/keys/KeyInput'
 function App() {
   return (
     <Router>
-      <Navbar />
-      <div className="App">
-        <Switch>
-          <Route
-            exact
-            path="/"
-            render={() => (
-              <React.Fragment>
-                <KeyDisplay />
-                <KeyInput />
-              </React.Fragment>
-            )}
-          />
-          <Redirect to="/" />
-        </Switch>
-      </div>
+        <Navbar />
+        <div className="App">
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <React.Fragment>
+                  <KeyDisplay />
+                  <KeyInput />
+                </React.Fragment>
+              )}
+            />
+            <Redirect to="/" />
+          </Switch>
+        </div>
     </Router>
   )
 }
