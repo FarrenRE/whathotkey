@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { activeKeyUpdated } from './keysSlice'
@@ -11,6 +11,12 @@ export const KeyInput = () => {
 
   const [activeKeyInput, setActiveKeyInput] = useState({})
 
+  const mainInput = useRef(null) // for text input focus
+
+  useEffect(() => {
+    // focus text input
+    mainInput.current.focus()
+  })
 
   const handleKeyDown = (e) => {
     e.preventDefault()
@@ -85,6 +91,7 @@ export const KeyInput = () => {
     return activeKeyString
   }
 
+  /** TEST */
   const handleChange = (e) => {
     console.log('handleChange()')
     console.log(e)
@@ -93,6 +100,7 @@ export const KeyInput = () => {
   return (
     <section className={styles.section}>
       <input
+        ref={mainInput}
         className={styles.input}
         type="text"
         onChange={handleChange}
