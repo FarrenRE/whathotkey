@@ -16,7 +16,98 @@ export const sampleProfile = () => {
         'altKey': false,
         'ctrlKey': false,
         'description': 'This is a really long hotkey description to test this case in which there is a really really really long hotkey description so we can know what the display looks like when there is a hotkey description of ludicrous proportions. Maybe have some punctuation happening as well; so we know what truly vast quantities of text will appear as within the key display. Perhaps an additional sentence would serve to bring home the fact that there is a lot, and I mean A LOT of text in this description.'
-      }
+      },
+      {
+        'key': 'F1',
+        'shiftKey': false,
+        'altKey': false,
+        'ctrlKey': false,
+        'description': 'Chrome: Open help tab'
+      },
+      {
+        'key': 'F3',
+        'shiftKey': false,
+        'altKey': false,
+        'ctrlKey': false,
+        'description': 'Firefox: Find in page'
+      },
+      {
+        'key': 'F5',
+        'shiftKey': false,
+        'altKey': false,
+        'ctrlKey': false,
+        'description': 'Refresh page'
+      },
+      {
+        'key': 'F5',
+        'shiftKey': false,
+        'altKey': false,
+        'ctrlKey': true,
+        'description': 'Refresh page and clear browser cache'
+      },
+      {
+        'key': 'F6',
+        'shiftKey': false,
+        'altKey': false,
+        'ctrlKey': false,
+        'description': 'Highlight address bar'
+      },
+      {
+        'key': 'F7',
+        'shiftKey': false,
+        'altKey': false,
+        'ctrlKey': false,
+        'description': 'Enable caret browsing (keyboard navigation)'
+      },
+      {
+        'key': 'F11',
+        'shiftKey': false,
+        'altKey': false,
+        'ctrlKey': false,
+        'description': 'Engage full-screen mode'
+      },
+      {
+        'key': 'F12',
+        'shiftKey': false,
+        'altKey': false,
+        'ctrlKey': false,
+        'description': 'Engage inspector tool'
+      },
+      {
+        'key': '-',
+        'shiftKey': false,
+        'altKey': false,
+        'ctrlKey': false,
+        'description': 'Operator: Subtraction'
+      },
+      {
+        'key': '+',
+        'shiftKey': false,
+        'altKey': false,
+        'ctrlKey': false,
+        'description': 'Operator: Addition'
+      },
+      {
+        'key': '*',
+        'shiftKey': false,
+        'altKey': false,
+        'ctrlKey': false,
+        'description': 'Operator: Multiplication'
+      },
+      {
+        'key': '/',
+        'shiftKey': false,
+        'altKey': false,
+        'ctrlKey': false,
+        'description': 'Operator: Division'
+      },
+      {
+        'key': 'Escape',
+        'shiftKey': false,
+        'altKey': false,
+        'ctrlKey': false,
+        'description': 'Run away!!!'
+      },
     ]
   }
 
@@ -52,6 +143,13 @@ function spawnControlGroupHotkeys() {
     )
   }
   return controlGroupHotkeys
+}
+
+/**
+ * Generate F## key hotkeys
+ */
+function spawnFunctionKeyHotkeys() {
+
 }
 
 export default sampleProfile
