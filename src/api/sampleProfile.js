@@ -145,11 +145,4 @@ function spawnControlGroupHotkeys() {
   return controlGroupHotkeys
 }
 
-/**
- * Generate F## key hotkeys
- */
-function spawnFunctionKeyHotkeys() {
-
-}
-
 export default sampleProfile
