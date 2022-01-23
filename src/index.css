@@ -95,6 +95,20 @@ nav a:hover {
   margin-left: 0;
 }
 
+
+/* Simple Keyboard */
+
+.hg-button-space {
+  width: 350px;
+}
+
+.myClass {
+  background: rebeccapurple !important; /* Override component default theme */
+  color: white;
+  font-weight: bold;
+}
+
+
 /* Main content */
 
 section {
