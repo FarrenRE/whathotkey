@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { setInputLocked } from './keysSlice'
-import styles from './KeyDisplay.module.scss'
-// import EditKeybindForm from './EditKeybindForm'
 import { keybindAdded } from './keysSlice'
+// import EditKeybindForm from './EditKeybindForm'
+import styles from './KeyDisplay.module.scss'
 
 /**
  * Component to display active key description
