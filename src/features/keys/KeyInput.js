@@ -7,11 +7,13 @@ import 'react-simple-keyboard/build/css/index.css'
 
 import { activeKeyUpdated } from './keysSlice'
 import styles from './KeyInput.module.scss'
+import { current } from '@reduxjs/toolkit'
 
 export const KeyInput = () => {
 
   const dispatch = useDispatch()
   const inputLocked = useSelector(state => state.keys.inputLocked)
+  const profileHotkeys = useSelector(state => state.keys.profile.hotkeys)
 
   const [activeKeyInput, setActiveKeyInput] = useState({})
 
@@ -21,6 +23,36 @@ export const KeyInput = () => {
   useEffect(() => {
     // focus text input
     mainInput.current.focus()
+
+    // Test
+    // keyboard.current.recurseButtons(buttonElement => {
+    //   console.log('buttonElement', buttonElement.getAttribute('data-skbtn'))
+    // })
+    console.log('profileHotkeys')
+
+    for(let hotkey of profileHotkeys) {
+      console.log('hotkey:', hotkey)
+      let profileKey = hotkey.key // profile hotkey, in lowercase      
+      let boundKey = false
+      
+      if( profileKey.length === 1 ) {
+        boundKey = keyboard.current.getButtonElement(profileKey.toUpperCase())
+      }
+      else if( profileKey.length === 2 ) { // function key
+        console.log(profileKey)
+        boundKey = keyboard.current.getButtonElement(`{${ profileKey.toUpperCase() }}`)
+      } else { // named key
+        console.log(profileKey)
+        boundKey = keyboard.current.getButtonElement(`{${ profileKey.toLowerCase() }}`)
+      }
+
+      // If profile key is found on keyboard, add class
+      if( boundKey ) {
+        boundKey.classList.add('bound')
+      }
+
+    }
+
   })
 
   /**
@@ -60,8 +92,7 @@ export const KeyInput = () => {
     console.log(keypressData)
 
     // update keyboard
-    changeButtonTheme(keypressData)
-
+    changeButtonTheme(keypressData, 'active')
     // update state
     setActiveKeyInput(keypressData)
     // dispatch update
@@ -122,21 +153,20 @@ export const KeyInput = () => {
 
   /**
    * 
-   * @param {keyData} keyData 
+   * @param {Object} keyData active keyData
+   * @param {String} theme class name
    */
-  const changeButtonTheme = (keyData) => {
+  const changeButtonTheme = (keyData, theme) => {
 
     const buttonThemeButtons = transformKeypressData(keyData)
 
     keyboard.current.dispatch(
       instance => {
         instance.setOptions({
-          buttonTheme: [
-            {
-              class: "myClass",
-              buttons: buttonThemeButtons
-            }
-          ]
+          buttonTheme: [{
+            class: theme,
+            buttons: buttonThemeButtons
+          }]
         })
       }
     )
@@ -146,10 +176,10 @@ export const KeyInput = () => {
   /**
    * @function transformKeypressData
    * @param {Object} keyData 
-   * @description transform keyData into buttonTheme string
+   * @description Transform keyData into buttonTheme string.
    */
   const transformKeypressData = (keyData) => {
-    // parse meta keys
+    // parse meta keys and special cases
     let metaKeys = [];
     if( keyData.shiftKey ) { metaKeys.push('{shift}') }
     if( keyData.altKey ) { metaKeys.push('{alt}') }
@@ -158,15 +188,26 @@ export const KeyInput = () => {
     if( keyData.key.toLowerCase() === 'spacebar' ) { metaKeys.push('{space}') }
     if( keyData.key.toLowerCase() === 'capslock' ) { metaKeys.push('{capslock}') }
     if( keyData.key.toLowerCase() === 'tab' ) { metaKeys.push('{tab}') }
+    if( keyData.key.toLowerCase() === 'escape' ) { metaKeys.push('{escape}') }
+    if( keyData.key.toLowerCase() === 'backspace' ) { metaKeys.push('{backspace}') }
+    if( keyData.key.toLowerCase() === 'enter' ) { metaKeys.push('{enter}') }
 
     // handle function keys (f1, f2, ..., fn)
     if( keyData.key.match( /F\d{1,2}/ ) ) {
       keyData.key = `{${ keyData.key }}`
     }
 
-    let result = `${ keyData.key } ${ metaKeys.join(' ') }`;
+    let result = `${ keyData.key } ${ metaKeys.join(' ') }`
     console.log(`Transformed keypressData: ${ result }`)
     return result
+  }
+
+  /**
+   * @function highlightBoundKeys
+   * @description Add theme to any key with an active binding.
+   */
+  const highlightBoundKeys = () => {
+
   }
 
   const keyboardOptions = {
