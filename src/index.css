@@ -98,14 +98,18 @@ nav a:hover {
 
 /* Simple Keyboard */
 
-.hg-button-space {
+.simple-keyboard .hg-button-space {
   width: 350px;
 }
 
-.myClass {
+.simple-keyboard .active {
   background: rebeccapurple !important; /* Override component default theme */
   color: white;
   font-weight: bold;
+}
+
+.simple-keyboard .bound {
+  border: 1px solid orange;
 }
 
 
