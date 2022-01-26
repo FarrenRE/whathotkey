@@ -21,7 +21,8 @@ export const KeyDisplay = () => {
   const [content, setContent] = useState( renderHotkeyDescription() )
 
   /**
-   * Look up hotkey description based on active hotkey selector
+   * @function renderHotkeyDescription
+   * @description Look up hotkey description based on active hotkey selector
    * @returns String hotkey description
    */
   function renderHotkeyDescription() {
